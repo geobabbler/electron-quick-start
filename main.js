@@ -10,8 +10,9 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
+  //createMenu();
   mainWindow = new BrowserWindow({width: 800, height: 600})
-
+  mainWindow.setMenu(null);
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`)
 
@@ -26,6 +27,8 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -51,3 +54,55 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+function createMenu(){
+  const {Menu} = require('electron')
+  const {dialog} = require('electron')
+const template = [
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'Open...',
+        accelerator: 'CmdOrCtrl+O',
+        click (item, focusedWindow) {
+          var f = dialog.showOpenDialog({properties: ['openFile', 'multiSelections'], filters: [{name: 'GeoJSON Files', extensions: ['geojson']}]});
+          alert(f[0]);
+        }
+      },
+      {
+         label: 'Dump',
+        accelerator: 'CmdOrCtrl+D',
+        click (item, focusedWindow) {
+          let c = mainWindow.webContents;
+          console.log(c);
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'cut'
+      },
+      {
+        role: 'copy'
+      },
+      {
+        role: 'paste'
+      },
+      {
+        role: 'pasteandmatchstyle'
+      },
+      {
+        role: 'delete'
+      },
+      {
+        role: 'quit'
+      }
+    ]
+  }
+  ]
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
+}

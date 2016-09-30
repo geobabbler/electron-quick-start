@@ -5,6 +5,9 @@
     <title>OpenLayers 3 in Electron</title>
     <link rel="stylesheet" href="index.css">
     <script type="text/javascript" src="http://openlayers.org/en/v3.0.0/build/ol.js"></script>
+    <script>
+ 
+     </script>
   </head>
   <body>
 <!--    <h1>Hello World!</h1> -->
@@ -34,14 +37,16 @@ var map = new ol.Map({
 		center: ol.proj.transform([-76.6955, 38.3754], 'EPSG:4326', 'EPSG:3857'),
 		//center: [this.startPosition.lon, this.startPosition.lat],
 		zoom: 14,
-		rotation:0
+		rotation:0,
+    projection: 'EPSG:3857'
 	})
 });
      </script>
   </body>
 
-  <script>
+  <script type="text/javascript" src="renderer.js">
     // You can also require other files to run in this process
-    require('./renderer.js')
+    //require('./olfuncs.js')
+    //require('./renderer.js')
   </script>
 </html>
